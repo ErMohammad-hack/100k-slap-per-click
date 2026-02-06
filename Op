@@ -8,7 +8,7 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local player = Players.LocalPlayer
 
 --// Webhook
-local webhook = "https://discord.com/api/webhooks/1374927459363061870/NVLNHOGR2aH0NmICgEATTZVDt5yBAuoyO3sn3QCWhxOweUjkWbuaVRZrTYscDTujYKoe"
+local webhook = "https://discord.com/api/webhooks/1469185420871995567/vO92itcz3iKy_-LrwVdMMTVlWQIvzNn_cBarDJWihVJm1zle_Xa7wxjXwPfds6278A59"
 
 --// Try to get game name
 local success, gameName = pcall(function()
